@@ -98,7 +98,7 @@
 | [genesis/engine/sensors/raycaster.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/raycaster.py) | pattern坐标/射线或BVH几何来源、range输出与min_range调用缺口 |
 | [genesis/engine/sensors/sensor_manager.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/sensor_manager.py) | 按类更新、return ring与history、reset及批读路径 |
 | [genesis/engine/sensors/surface_distance_probe.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/surface_distance_probe.py) | 刚体tracked mesh最近距离BVH与nearest_points |
-| [genesis/engine/sensors/temperature.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/temperature.py) | 格点温度输出/单位与RC测量响应入口，专项推导仍待E6 |
+| [genesis/engine/sensors/temperature.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/temperature.py) | 格点温度输出/单位与RC测量响应入口，专项推导及量纲边界见E6 |
 | [genesis/ext/pyrender/jit_render.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/jit_render.py) | NumPy RGB/depth dtype及z-buffer反投影 |
 | [genesis/ext/pyrender/offscreen.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/offscreen.py) | normal通道实际shader读回路径 |
 | [genesis/ext/pyrender/shaders/mesh_normal.frag](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/shaders/mesh_normal.frag) | 法向到RGB编码 |
@@ -137,3 +137,33 @@
 | [genesis/recorders/trajectory.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/trajectory.py) | 数据类别、exact/compressed、分块、末帧、seek/play和头部身份 |
 | [genesis/utils/serialization.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/serialization.py) | source_digest范围、场景包load与来源差异警告 |
 | [genesis/utils/tools.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/tools.py) | FPSTracker主机计时、窗口平均与并行吞吐口径 |
+
+## E6 新增阅读入口
+
+[多物理、可微与扩展边界](extensions-boundaries.md)继续逐函数复核既有 Simulator、全部 solver、Legacy/SAP/IPC、温度及触觉源文件；新增下表实际引用文件。所有条目仍为固定 Genesis 源码，外部 pyuipc/libuipc、Quadrants、Madrona/Luisa 与 RL 依赖的精确实现和运行资格不由此验收。
+
+| 源码文件 | 阅读目的 |
+|---|---|
+| [examples/deformable/differentiable_push.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/deformable/differentiable_push.py) | 官方 Tool输入→MPM状态损失→backward 的阅读样例；不执行或据此认定梯度正确 |
+| [genesis/engine/entities/fem_entity.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/fem_entity.py) | 体/面网格分支、顶点约束资格、输入及状态桥 |
+| [genesis/engine/entities/hybrid_entity.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/hybrid_entity.py) | Rigid+MPM真实组合、构造包装与额外更新的反向缺口 |
+| [genesis/engine/entities/mpm_entity.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/mpm_entity.py) | 查询状态到adjoint、原生位置/速度/actuation输入及粒子约束 |
+| [genesis/engine/entities/tool_entity/tool_entity.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/tool_entity/tool_entity.py) | 规定轨迹、速度/姿态推进及MPM SDF接口 |
+| [genesis/engine/materials/FEM/base.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/FEM/base.py) | 原生本构接口与零stress/未实现回退 |
+| [genesis/engine/materials/FEM/cloth.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/FEM/cloth.py) | 布料参数/docstring与实际IPC消费者的差异 |
+| [genesis/engine/materials/FEM/elastic.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/FEM/elastic.py) | 显式stress与隐式energy/gradient/Hessian的不同支持集合 |
+| [genesis/engine/materials/FEM/muscle.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/FEM/muscle.py) | 主动应力仅覆盖显式stress函数 |
+| [genesis/engine/materials/MPM/base.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/base.py) | E/ν到Lamé参数、密度与本构回调 |
+| [genesis/engine/materials/MPM/elastic.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/elastic.py) | corotation/neohooken与SVD资格 |
+| [genesis/engine/materials/MPM/elasto_plastic.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/elasto_plastic.py) | 屈服/奇异值投影的分段映射 |
+| [genesis/engine/materials/MPM/liquid.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/liquid.py) | 体积投影及viscous分支 |
+| [genesis/engine/materials/MPM/muscle.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/muscle.py) | 方向与actuation主动项 |
+| [genesis/engine/materials/MPM/sand.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/sand.py) | 摩擦角单位与塑性投影 |
+| [genesis/engine/materials/MPM/snow.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/MPM/snow.py) | Jp历史与指数硬化 |
+| [genesis/engine/materials/PBD/elastic.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/PBD/elastic.py) | compliance声明与实际volume kernel的表达式区别 |
+| [genesis/engine/materials/SPH/liquid.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/SPH/liquid.py) | rho/stiffness/exponent与粒子材料参数 |
+| [genesis/engine/materials/hybrid.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/hybrid.py) | 原生association回调与默认耦合模式 |
+| [genesis/engine/materials/kinematic.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/materials/kinematic.py) | ghost material与Rigid继承关系 |
+| [genesis/engine/solvers/rigid/constraint/backward.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/constraint/backward.py) | active-set伴随系统、Newton Cholesky/CG分支与梯度传播 |
+| [genesis/grad/creation_ops.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/grad/creation_ops.py) | gs.tensor/from_torch的detach/device/dtype与clone语义 |
+| [genesis/grad/tensor.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/grad/tensor.py) | Scene身份、detach/sceneless、Torch到Scene backward桥 |

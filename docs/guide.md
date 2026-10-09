@@ -38,6 +38,6 @@ CG 与 Newton 的分支、[noslip](https://github.com/Genesis-Embodied-AI/genesi
 
 这些观测接口已在 [E4 传感器与渲染专题](sensors-rendering.md) 展开，包含分割ID、轴深度/range和缓存时序的固定版本差异。
 
-多物理求解器、耦合器、可微路径与 rigid solver 的支持集合应分别列出。[E5 批量、学习与数据](batch-learning-data.md)已展开 reset/step、终止/截断、随机种子、观测拼接、日志与回放；明确官方任务示例与外部训练器的边界，本阶段不启动策略训练。自查：能否解释 build 前后允许的操作、batch 维度、状态设置与控制的差别、默认值的解析路径？专题展开见[完整路线](curriculum.md)。
+[E6 多物理、可微与扩展](extensions-boundaries.md)按 material→solver→coupler→state/backward 展开，涵盖热/触觉专项及能力缺项。求解器、耦合器、可微路径与 rigid solver 的支持集合分别列出，不把 batch 与异构拓扑混为一谈。[E5 批量、学习与数据](batch-learning-data.md)已展开 reset/step、终止/截断、随机种子、观测拼接、日志与回放；明确官方任务示例与外部训练器的边界，本阶段不启动策略训练。自查：能否解释 build 前后允许的操作、batch 维度、状态设置与控制的差别、默认值的解析路径？专题展开见[完整路线](curriculum.md)。
 
 实验最终复用 [DexLab](https://github.com/huangkiki/Dexlab) 并保留原版本、配置和工况；当前不另建实验批次或评分器。
