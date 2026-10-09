@@ -2,10 +2,10 @@
 
 Understand Genesis through native APIs, physics concepts and versioned source code.
 
-[中文](README.md) · [Introductory guide](docs/guide.md) · [Curriculum](docs/curriculum.md) · [Source map](docs/source-map.md) · [Versions](docs/versions.md) · [Roadmap](docs/roadmap.md) · [Project tracker](https://github.com/users/huangkiki/projects/2)
+[中文](README.md) · [Introductory guide](docs/guide.md) · [Curriculum](docs/curriculum.md) · [Source map](docs/source-map.md) · [Versions](docs/versions.md) · [Roadmap](docs/roadmap.md) · [Series home](https://github.com/huangkiki/sim-atlas) · [Project tracker](https://github.com/users/huangkiki/projects/2)
 
 Part of **Sim Atlas**, an independent community learning series with two complete planned tracks: applications (modeling, control, robotics, sensing and data) and principles/source (dynamics, contact, solvers, integration and extensions).
 
-The initial guide and pinned source map are available in Chinese. The full course is in development. This phase prioritizes understanding engine subsystems. Minimal snippets support explanation and are explicitly marked when unexecuted. No new simulation campaigns, benchmarks, training or scoring are included; later experimental material will reuse [DexLab](https://github.com/huangkiki/Dexlab) with its original version and workload boundaries.
+The initial guide, pinned source map and [E1 modeling, frames, state and time lesson](docs/modeling-state-time.md) are available in Chinese. E1 covers rigid and multiphysics state layouts, asset and inertia conventions, reset versus checkpoint, and step/substep semantics. [Acceptance and limitations](docs/e1-acceptance.md) distinguish pinned-source review and syntax checks from unperformed runtime validation. The full course is in development. This phase prioritizes understanding engine subsystems. Minimal snippets support explanation and are explicitly marked when unexecuted. No new simulation campaigns, benchmarks, training or scoring are included; later experimental material will reuse [DexLab](https://github.com/huangkiki/Dexlab) with its original version and workload boundaries.
 
 [Pinned upstream source](https://github.com/Genesis-Embodied-AI/genesis-world/tree/216a708e06124595521a9d36a51fae5393fd4ff8) · [Attribution](THIRD_PARTY.md)
