@@ -170,6 +170,50 @@
     {
       "path": "examples/tutorials/batched_IK.py",
       "git_blob": "7c8e745e61b60d5dee5455b3a875e51f2f5673fe"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/constraint/linesearch.py",
+      "git_blob": "04f913b7fae88226a1458580090372bc64d79e30"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/constraint/solver_breakdown.py",
+      "git_blob": "7a0ca3cf0735d2c70e1d474606857da4700e31c7"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/constraint/island.py",
+      "git_blob": "42cf9f5189b60c2d834723e588ec0a4b532d8425"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/collider/collider.py",
+      "git_blob": "1693d4b979da048b2641469a5795a836b8b58f07"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/collider/contact.py",
+      "git_blob": "58b54122bd22bcd88259a8fa9087e39c649e0d7d"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/collider/narrowphase.py",
+      "git_blob": "4b2a1c0c72f663d427d3f5b3581531f30c0f563d"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/collider/broadphase.py",
+      "git_blob": "a1d5b8ee75f5947f82d2e54e620400d5452f8725"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/abd/misc.py",
+      "git_blob": "6f751b7b651e28d8cc74d2cc111d5cb14a4dd84f"
+    },
+    {
+      "path": "genesis/engine/couplers/legacy_coupler.py",
+      "git_blob": "106778fcb4ad2b31af035c150617e2fb67d20cfb"
+    },
+    {
+      "path": "genesis/engine/couplers/sap_coupler.py",
+      "git_blob": "ab41e7b78ff6cea8cd69fa010ded0ad1d05b2691"
+    },
+    {
+      "path": "genesis/engine/couplers/ipc_coupler/coupler.py",
+      "git_blob": "166b8cd909d43c525d5276cddf25f0fd1a0c75d0"
     }
   ]
 }

@@ -62,3 +62,21 @@
 | [examples/tutorials/control_your_robot.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/control_your_robot.py) | 官方名字映射及模式切换示例；仅阅读，不执行 |
 | [examples/tutorials/IK_motion_planning_grasp.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/IK_motion_planning_grasp.py) | 官方IK→规划→驱动调用顺序；不将示例当抓取验收 |
 | [examples/tutorials/batched_IK.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/batched_IK.py) | 官方批量IK调用入口；不执行 |
+
+## E3 新增阅读入口
+
+[接触、求解器与力观测](contact-solvers-forces.md)继续使用已冻结的RigidSolver、ConstraintSolver、forward_dynamics、材料与配置文件，并加入以下入口。刚体内核展开至终止与读回；耦合器仅声明下表的分派/响应边界，专门推导留E6。
+
+| 源码文件 | 阅读目的 |
+|---|---|
+| [genesis/engine/solvers/rigid/constraint/linesearch.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/constraint/linesearch.py) | 逐岛线搜索、Hager–Zhang系数、实际退出与warmstart证书 |
+| [genesis/engine/solvers/rigid/constraint/solver_breakdown.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/constraint/solver_breakdown.py) | decomposed graph执行臂及主迭代早停 |
+| [genesis/engine/solvers/rigid/constraint/island.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/constraint/island.py) | 接触/约束岛与每岛质量trace尺度 |
+| [genesis/engine/solvers/rigid/collider/collider.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/collider/collider.py) | 过滤、检测分派、容量和contact读回所有权 |
+| [genesis/engine/solvers/rigid/collider/contact.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/collider/contact.py) | 摩擦/sol_params组合与休眠接触保留 |
+| [genesis/engine/solvers/rigid/collider/narrowphase.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/collider/narrowphase.py) | 凸体/非凸/terrain/可微几何分支入口 |
+| [genesis/engine/solvers/rigid/collider/broadphase.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/collider/broadphase.py) | sweep-and-prune/全对遍历及运行期过滤 |
+| [genesis/engine/solvers/rigid/abd/misc.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/abd/misc.py) | 休眠/唤醒、耦合wrench与施力frame |
+| [genesis/engine/couplers/legacy_coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/legacy_coupler.py) | 刚体–粒子的SDF/速度响应与动量反作用 |
+| [genesis/engine/couplers/sap_coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/sap_coupler.py) | 独立SAP/PCG/线搜索与收敛字段 |
+| [genesis/engine/couplers/ipc_coupler/coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/ipc_coupler/coupler.py) | 外部IPC world推进与状态/控制权边界 |
