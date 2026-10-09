@@ -12,6 +12,8 @@ The [E2 control, robotics and task-interface lesson](docs/control-robotics-tasks
 
 The [E3 contact, solvers and force-observation lesson](docs/contact-solvers-forces.md) connects material mixing, contact rows, Newton/CG, stopping rules, warm starts, integration and force sampling. It distinguishes rigid, multiphysics and coupler branches, including limitations of contact readback. Its [acceptance record](docs/e3-acceptance.md) documents source and syntax checks; native execution remains unperformed.
 
+The [E4 sensors, rendering and visualization lesson](docs/sensors-rendering.md) separates visual cameras, lazy RGB camera sensors, ray/depth queries, contact/joint effort, IMU and tactile models. It covers frames, units, shapes, sampling/cache timing, segmentation-ID decoding, GUI/headless and renderer/differentiation limits. The [acceptance record](docs/e4-acceptance.md) lists pinned implementation gaps and the unexecuted native API example.
+
 The full course is in development. This phase prioritizes understanding engine subsystems. Minimal snippets support explanation and are explicitly marked when unexecuted. No new simulation campaigns, benchmarks, training or scoring are included; later experimental material will reuse [DexLab](https://github.com/huangkiki/Dexlab) with its original version and workload boundaries.
 
 [Pinned upstream source](https://github.com/Genesis-Embodied-AI/genesis-world/tree/216a708e06124595521a9d36a51fae5393fd4ff8) · [Attribution](THIRD_PARTY.md)

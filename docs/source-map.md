@@ -80,3 +80,38 @@
 | [genesis/engine/couplers/legacy_coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/legacy_coupler.py) | 刚体–粒子的SDF/速度响应与动量反作用 |
 | [genesis/engine/couplers/sap_coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/sap_coupler.py) | 独立SAP/PCG/线搜索与收敛字段 |
 | [genesis/engine/couplers/ipc_coupler/coupler.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/couplers/ipc_coupler/coupler.py) | 外部IPC world推进与状态/控制权边界 |
+
+## E4 新增阅读入口
+
+范围是[A6专题](sensors-rendering.md)的传感器/渲染执行链，未运行上游例子或测试。渲染外部核心的二进制与平台资格未验收。已有Camera、Scene、Simulator、RigidSolver与tactile选项继续复用上方固定来源。
+
+| 源码文件 | 阅读目的 |
+|---|---|
+| [genesis/engine/sensors/base_sensor.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/base_sensor.py) | 普通/派生read、shape与误差流水线、delay/jitter、copy边界 |
+| [genesis/engine/sensors/camera.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/camera.py) | RGB sensor派生实现、lazy cache、挂载和renderer分支 |
+| [genesis/engine/sensors/contact_force.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/contact_force.py) | 接触计数、排除filter、A/B符号、link系力与每轴钳位 |
+| [genesis/engine/sensors/depth_camera.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/depth_camera.py) | read_image只是range reshape及history限制 |
+| [genesis/engine/sensors/imu.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/imu.py) | proper acceleration、杠杆臂、轴对齐和三字段输出 |
+| [genesis/engine/sensors/joint_torque.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/joint_torque.py) | DOF选择与actuator output effort getter调用 |
+| [genesis/engine/sensors/kinematic_tactile.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/kinematic_tactile.py) | solver候选门控、probe深度、taxel力/力矩估计与容量 |
+| [genesis/engine/sensors/point_cloud_tactile.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/point_cloud_tactile.py) | Proximity/Elastomer输出、点云归一化、FFT资格与模型边界 |
+| [genesis/engine/sensors/raycaster.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/raycaster.py) | pattern坐标/射线或BVH几何来源、range输出与min_range调用缺口 |
+| [genesis/engine/sensors/sensor_manager.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/sensor_manager.py) | 按类更新、return ring与history、reset及批读路径 |
+| [genesis/engine/sensors/surface_distance_probe.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/surface_distance_probe.py) | 刚体tracked mesh最近距离BVH与nearest_points |
+| [genesis/engine/sensors/temperature.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/sensors/temperature.py) | 格点温度输出/单位与RC测量响应入口，专项推导仍待E6 |
+| [genesis/ext/pyrender/jit_render.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/jit_render.py) | NumPy RGB/depth dtype及z-buffer反投影 |
+| [genesis/ext/pyrender/offscreen.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/offscreen.py) | normal通道实际shader读回路径 |
+| [genesis/ext/pyrender/shaders/mesh_normal.frag](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/shaders/mesh_normal.frag) | 法向到RGB编码 |
+| [genesis/ext/pyrender/shaders/mesh_normal.vert](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/ext/pyrender/shaders/mesh_normal.vert) | 世界系法向变换 |
+| [genesis/options/renderers.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/renderers.py) | 主renderer选项身份及BatchRenderer默认分支 |
+| [genesis/options/sensors/__init__.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/sensors/__init__.py) | 原生sensor namespace、Lidar别名与类型tag |
+| [genesis/options/sensors/camera.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/sensors/camera.py) | 三种RGB camera选项、分辨率/外参、history限制与Batch默认值 |
+| [genesis/options/sensors/options.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/sensors/options.py) | 传感器选项、挂载/过滤/误差、射线/IMU/温度原生字段 |
+| [genesis/options/sensors/raycaster.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/sensors/raycaster.py) | Grid/Spherical/DepthCamera pattern、起点方向与针孔内参 |
+| [genesis/utils/raycast_qd.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/raycast_qd.py) | raycast传入字段、world/local点定义与no-hit哨兵 |
+| [genesis/vis/batch_renderer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/batch_renderer.py) | Madrona边界、rigid视觉几何、批量缓存和depth后处理 |
+| [genesis/vis/rasterizer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/rasterizer.py) | headless GL路径、split_envs和输出通道分派 |
+| [genesis/vis/rasterizer_context.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/rasterizer_context.py) | 压缩segmentation ID、背景和几何key映射 |
+| [genesis/vis/raytracer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/raytracer.py) | Luisa接口与RGB字节读回，非运行验收 |
+| [genesis/vis/visualizer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/visualizer.py) | viewer与camera renderer分离、segmentation字典、可视状态更新 |
+| [tests/sensors/test_api.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/tests/sensors/test_api.py) | 上游history绕过delay与jitter预期；只阅读未执行 |

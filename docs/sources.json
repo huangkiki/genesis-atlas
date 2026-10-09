@@ -214,6 +214,118 @@
     {
       "path": "genesis/engine/couplers/ipc_coupler/coupler.py",
       "git_blob": "166b8cd909d43c525d5276cddf25f0fd1a0c75d0"
+    },
+    {
+      "path": "genesis/engine/sensors/base_sensor.py",
+      "git_blob": "47a91d4845c5d62b5abdfba3b8fbd46983cac051"
+    },
+    {
+      "path": "genesis/engine/sensors/camera.py",
+      "git_blob": "f4f9ebccc165d785fb62d6bc2f623955e1ff7293"
+    },
+    {
+      "path": "genesis/engine/sensors/contact_force.py",
+      "git_blob": "b3b3515c7ad78a18281a4d65dadd0a9647b350df"
+    },
+    {
+      "path": "genesis/engine/sensors/depth_camera.py",
+      "git_blob": "87dbb7851ac5531f995071c9669605e6aff72d11"
+    },
+    {
+      "path": "genesis/engine/sensors/imu.py",
+      "git_blob": "82cbd3e0e691defa85ff399ac5980c29b3c554cd"
+    },
+    {
+      "path": "genesis/engine/sensors/joint_torque.py",
+      "git_blob": "d846291f62b894840b3e0f56d34d268d8a7cc793"
+    },
+    {
+      "path": "genesis/engine/sensors/kinematic_tactile.py",
+      "git_blob": "f4c9d8a360a49cd04c43aa790d7b0a63a0f9e863"
+    },
+    {
+      "path": "genesis/engine/sensors/point_cloud_tactile.py",
+      "git_blob": "3af969f4c2c68ad263bccad96755fe07f5235bca"
+    },
+    {
+      "path": "genesis/engine/sensors/raycaster.py",
+      "git_blob": "099b28b6cb2d5620c0aeacb89597a38f43ad9bfa"
+    },
+    {
+      "path": "genesis/engine/sensors/sensor_manager.py",
+      "git_blob": "ea36981dcdbd0ec889152af03a8191e228d3c356"
+    },
+    {
+      "path": "genesis/engine/sensors/surface_distance_probe.py",
+      "git_blob": "16a0054df2ea3f94c0e91c5df3ede73b62877ec7"
+    },
+    {
+      "path": "genesis/engine/sensors/temperature.py",
+      "git_blob": "709f24a6f457d26e5b163720aadad940bd8a18ac"
+    },
+    {
+      "path": "genesis/ext/pyrender/jit_render.py",
+      "git_blob": "603dd8d3adad5c4f3c7ced2566bff54863da2688"
+    },
+    {
+      "path": "genesis/ext/pyrender/offscreen.py",
+      "git_blob": "c72c82fee3ab2f140e0b5fb5d6bb98bb03742d42"
+    },
+    {
+      "path": "genesis/ext/pyrender/shaders/mesh_normal.frag",
+      "git_blob": "1d66d91b6ae6b09261e77ee81c0e9c879a621b82"
+    },
+    {
+      "path": "genesis/ext/pyrender/shaders/mesh_normal.vert",
+      "git_blob": "9aa2cfd2f20e710926ccee3f963bc903856272d3"
+    },
+    {
+      "path": "genesis/options/renderers.py",
+      "git_blob": "aaaf2d65fa8c0bed21b64b2fd6734f7202b368a7"
+    },
+    {
+      "path": "genesis/options/sensors/__init__.py",
+      "git_blob": "cd24e2afaece13e5a6ab163a6eb0990a3dfc4612"
+    },
+    {
+      "path": "genesis/options/sensors/camera.py",
+      "git_blob": "3cb62ddec02c1824885343033951af375f95a5e0"
+    },
+    {
+      "path": "genesis/options/sensors/options.py",
+      "git_blob": "1948fbb0ed6acf55998aadd3c7a1f2c9a65d5f9b"
+    },
+    {
+      "path": "genesis/options/sensors/raycaster.py",
+      "git_blob": "e63ff3f59d2d4c2a236bde67f9981438a088773d"
+    },
+    {
+      "path": "genesis/utils/raycast_qd.py",
+      "git_blob": "ddf3fa9fd40f7ec96704838a6c6fce8a7d0152ae"
+    },
+    {
+      "path": "genesis/vis/batch_renderer.py",
+      "git_blob": "d3144d5e7559f2520b014d4bade20be6e2120eaf"
+    },
+    {
+      "path": "genesis/vis/rasterizer.py",
+      "git_blob": "c0765f699e3db6e53458ea60ec582f2487565756"
+    },
+    {
+      "path": "genesis/vis/rasterizer_context.py",
+      "git_blob": "d91fb64580f2a89a99447b59a62d5331d79a6a63"
+    },
+    {
+      "path": "genesis/vis/raytracer.py",
+      "git_blob": "1cab25882c22d0be47f4a356a77d144076a45a67"
+    },
+    {
+      "path": "genesis/vis/visualizer.py",
+      "git_blob": "e911272ec2792b63d7badf41ec29923da0ca5657"
+    },
+    {
+      "path": "tests/sensors/test_api.py",
+      "git_blob": "271da259e35ba3a507c7391b5a8d25e47064df4e"
     }
   ]
 }

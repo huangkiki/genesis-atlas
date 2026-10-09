@@ -36,6 +36,8 @@ CG 与 Newton 的分支、[noslip](https://github.com/Genesis-Embodied-AI/genesi
 
 [Camera](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/camera.py) 和 [触觉选项](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/sensors/tactile.py) 是不同传感路径。图像、深度、接触力与触觉输出分别核对数据形状、单位、帧、更新阶段；视觉材质不应直接解释成物理材料。
 
+这些观测接口已在 [E4 传感器与渲染专题](sensors-rendering.md) 展开，包含分割ID、轴深度/range和缓存时序的固定版本差异。
+
 多物理求解器、耦合器、可微路径与 rigid solver 的支持集合应分别列出。学习接口要说明 reset/step、终止/截断、随机种子与观测拼接，但本阶段不启动策略训练。自查：能否解释 build 前后允许的操作、batch 维度、状态设置与控制的差别、默认值的解析路径？专题展开见[完整路线](curriculum.md)。
 
 实验最终复用 [DexLab](https://github.com/huangkiki/Dexlab) 并保留原版本、配置和工况；当前不另建实验批次或评分器。
