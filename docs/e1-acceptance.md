@@ -24,10 +24,12 @@
 | `git diff --check` | 通过 | 空白错误 |
 | `python scripts/check_docs.py` | 通过 | 本仓库 Markdown 相对链接目标存在 |
 | 对仓库 `.py` 与 Markdown `python` 片段运行 `ast.parse` | 通过：2个Python文件，0个Python围栏 | Python语法，不证明依赖或运行正确 |
-| 固定来源审计 | 通过：35个blob、88个固定源码链接 | 所引官方blob URL的提交/path/行号、manifest身份与Git tree一致 |
+| 固定来源审计 | 通过：35个blob、90个固定源码链接 | 所引官方blob URL的提交/path/行号、manifest身份与Git tree一致 |
 | 自审对照Issue | 已完成，未声明独立审查批准 | 检查公式假设、claim与原生实现、显式列出未覆盖范围 |
 
 首次来源审计发现两处行号终点超出文件长度（inertial.py 与 states/solvers.py），已改为实际末行并重新全量通过。固定来源审计同时验证所引路径属于该提交的 Git tree，下载内容计算 `SHA1("blob " + byte_length + NUL + content)` 与 manifest 和 tree 一致；每个行号范围落在实际文件中。这证明引用身份，不自动证明每段解释正确，解释另经下列自审核对。
+
+主 agent 审查发现基类与派生类 setter 的默认值不同，已修正表格与习题：`KinematicEntity` 默认为 `False`，`RigidEntity` 覆盖为 `True`，并补齐对应源码。
 
 ## 源码发现与未解决问题
 

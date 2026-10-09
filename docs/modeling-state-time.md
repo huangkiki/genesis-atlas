@@ -126,10 +126,12 @@ $$
 |---|---|---|
 | 查询配置 | `entity.get_qpos()` | 本实体配置；默认无 batch 时 `(n_qs,)` |
 | 查询广义速度 | `entity.get_dofs_velocity()` | 本实体 DOF；默认无 batch 时 `(n_dofs,)` |
-| 直接改配置 | `entity.set_qpos(q, zero_velocity=False)` | 改状态，不是施加力；默认不清零速度 |
+| 直接改配置 | `entity.set_qpos(q, zero_velocity=...)` | 改状态，不是施加力；`RigidEntity` 默认清零速度，`KinematicEntity` 默认保留速度 |
 | 直接改 DOF 位置/速度 | `set_dofs_position`、`set_dofs_velocity` | 分别使用 DOF 索引，不能用 q 索引替代 |
 | 设置驱动目标 | `control_dofs_position/velocity/force` | 改控制输入，经过后续步进才产生动力学响应；E2 详解 |
 | 查询全场景基础状态 | `scene.get_state()` | 返回各 solver 的 SimState，未激活 solver 可为 None |
+
+`RigidEntity` 覆盖了 `set_pos/set_quat/set_qpos/set_dofs_position`，将 `zero_velocity` 默认值设为 `True`；基类 `KinematicEntity` 则默认 `False`。要保留动力学刚体的速度，必须显式传 `zero_velocity=False`。即使清零速度，单独改配置仍不恢复控制输入、时间与求解器历史。[基类 setter][kinematic-setters]、[刚体覆盖实现][dynamic-setters]
 
 上述刚体 `get_qpos/get_dofs_velocity/get_links_pos/get_links_quat` 路径通过 `qd_to_torch(..., copy=True)` 读取；修改返回 tensor 不会自动写回物理场。要重置配置，显式调用 setter。内部零拷贝数组不享有此接口保证，不应把直接写 `_solver` 私有 buffer 作为教程方案。[getter 实现][getters]、[刚体位置getter][rigid-position]
 
@@ -252,7 +254,7 @@ Scene.step
 3. 定密度资产 scale=2，质量与惯量倍率分别是什么？若人为固定总质量呢？
    **答案：** 定密度8和32；固定质量时惯量为4。URDF 导入代码采用前一种，不能只按长度倍率猜质量。
 4. 为什么 `q=get_qpos(); q[0]=...` 不够？为何 set_qpos 后仍可能保留速度？
-   **答案：** getter 返回复制的 tensor，要显式 setter；zero_velocity 默认为 False，位置重置不是完整状态重置。
+   **答案：** getter 返回复制的 tensor，要显式 setter。`RigidEntity.set_qpos` 默认 `zero_velocity=True`，显式设为 `False` 才保留速度；`KinematicEntity` 默认 `False`。两者的位置重置都不是完整状态重置。
 5. `snapshot=scene.get_state(); scene.reset(snapshot); scene.reset()` 最后恢复什么？时间是否保留？
    **答案：** 第二次仍恢复 snapshot，因它已登记为新初态；基础 reset 清零环境步数，不能用 snapshot 的 s_global 代替 checkpoint 时钟。
 6. 为什么不对混合 Rigid+MPM 场景直接承诺 `reset(envs_idx=[0])` 隔离？
@@ -309,3 +311,6 @@ Scene.step
 [precision-dtype]: https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/__init__.py#L150-L163
 
 [rigid-position]: https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/rigid_solver.py#L2881-L2978
+
+[kinematic-setters]: https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/rigid_entity/rigid_entity.py#L939-L1064
+[dynamic-setters]: https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/rigid_entity/rigid_entity.py#L2467-L2590
