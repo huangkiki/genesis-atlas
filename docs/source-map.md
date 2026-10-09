@@ -48,3 +48,17 @@
 | [genesis/engine/solvers/rigid/abd/forward_kinematics.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/abd/forward_kinematics.py) | 配置到世界link姿态、DOF位置、空间速度的转换 |
 | [genesis/engine/solvers/kinematic_solver.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/kinematic_solver.py) | 公共getter的复制/转置和默认坐标语义 |
 | [genesis/utils/array_class.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/array_class.py) | 内部数组分类、STATE/WARMSTART/DERIVED与checkpoint集合 |
+
+## E2 新增阅读入口
+
+[驱动与机器人专题](control-robotics-tasks.md)以派生实体→solver→kernel核对接口，以下文件只声明表中范围的源码阅读。
+
+| 源码文件 | 阅读目的 |
+|---|---|
+| [genesis/engine/solvers/rigid/abd/accessor.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/abd/accessor.py) | 追踪控制模式/目标写入与当前控制力重算、限幅 |
+| [genesis/engine/solvers/rigid/abd/inverse_kinematics.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/solvers/rigid/abd/inverse_kinematics.py) | Jacobian行/列与frame，DLS/候选/限位分支，FK查询的临时写入恢复 |
+| [genesis/utils/misc.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/misc.py) | 目标shape广播和环境×DOF矩形写入 |
+| [genesis/utils/path_planning.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/path_planning.py) | 原生RRT/RRTConnect的关节限制、接触排除、有效性及状态恢复 |
+| [examples/tutorials/control_your_robot.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/control_your_robot.py) | 官方名字映射及模式切换示例；仅阅读，不执行 |
+| [examples/tutorials/IK_motion_planning_grasp.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/IK_motion_planning_grasp.py) | 官方IK→规划→驱动调用顺序；不将示例当抓取验收 |
+| [examples/tutorials/batched_IK.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/tutorials/batched_IK.py) | 官方批量IK调用入口；不执行 |
