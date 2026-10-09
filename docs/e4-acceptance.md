@@ -34,6 +34,8 @@
 
 新源码保存在独立E4工作目录，仅作阅读输入；未写入仓库。此次manifest新增28个实际引用文件；所有81份缓存内容重新计算Git blob SHA1，与官方固定tree和sources.json交叉核验。来源行号首轮发现4个末尾锚点越过文件结尾，已按实际文件修正；写作中间的链接检查曾因本验收页尚未写入失败，文件补齐后完整重跑通过。主审改文档后应重跑最终gate；本记录对应的最终head/tree在本次交付报告中返回。
 
+主agent展示复核发现7个块公式的 `\[...\]` 在 GitHub Markdown 渲染为普通文本，已改成 `$$...$$`。对完整正文调用 GitHub Markdown API 后确认7个块公式均生成 `math-renderer`；这是标记渲染检查，不是浏览器像素验收或原生运行。修正后重新执行文档、diff与源码/语法静态审计。
+
 ## 固定版本发现
 
 - 相机分割输出是压缩ID，公开解码入口是 `scene.visualizer.segmentation_idx_dict`；不能沿docstring直接索引link。

@@ -41,10 +41,10 @@ Scene.step
 
 硬件误差可概括为
 
-\[
+$$
  b^{rw}_k=b^{rw}_{k-1}+\epsilon^{rw}_k,\qquad
  y_k=Q_r(x_k+b+b^{rw}_k+\epsilon_k),\qquad Q_r(x)=r\operatorname{round}(x/r).
-\]
+$$
 
 源码按 `random_walk → noise → bias → resolution` 操作；noise/random_walk 是**每次外层采样**的标准差，函数没有自动乘 `sqrt(dt)`。不同 dt 下复用数值不等于复用同一连续时间噪声谱密度；量化关闭由 resolution 的阈值判定。GT 不经过这段硬件误差。[实现][hardware]。
 
@@ -84,10 +84,10 @@ Rasterizer dtype 来自 [framebuffer读回][jit-read]；分割整数转换见[co
 
 对于 pinhole，垂直 FOV 使用 degree，`f_x=f_y=f=H/(2 tan(fov/2))`（计算前转弧度），像素中心使用 `u+0.5,v+0.5`。令
 
-\[
+$$
  x_n=(u+0.5-c_x)/f_x,\quad y_n=(v+0.5-c_y)/f_y,\quad
  p_{CV}=z(x_n,y_n,1),\quad r=z\sqrt{1+x_n^2+y_n^2}.
-\]
+$$
 
 `camera.render(depth=True)` 的 Rasterizer返回投影轴深度 `z`，单位沿模型的m。OpenGL z-buffer经过near/far反投影，远裁剪背景返回far附近，**不是必然0**。BatchRenderer ray模式代码还显式把中心射线距离乘 `1/sqrt(1+x_n²+y_n²)` 变成plane depth。公式是pinhole假设，不把thin-lens/fisheye都强行解释为理想针孔深度。[反投影][jit-read]、[batch深度转换][batch-render]、[相机换算][cam-pointcloud]、[内参属性][cam-intrinsics]。
 
@@ -135,9 +135,9 @@ vis camera的 `set_pose(transform=...)` 与 pos/lookat/up 二选一；虽然docs
 
 `DepthCameraPattern(res=(W,H), fx=…,fy=…,cx=…,cy=…)` 的射线为
 
-\[
+$$
  d_{robot}=\operatorname{normalize}(1,-x_n,-y_n),
-\]
+$$
 
 即 **+X前、+Y左、+Z上**，与vis camera的OpenGL姿态、pointcloud的OpenCV输出都不同。FOV字段是degree，fx/fy/cx/cy是pixel。实现当fx或fy任一个缺失时重新计算二者；只给一项焦距并不能保证保留它。指定两个显式焦距可避免歧义。[pattern实现][patterns]。
 
@@ -163,10 +163,10 @@ RaycastContext实际遍历 **rigid_solver和kinematic_solver**：rigid默认建c
 
 `ContactForce` 内禀shape `(3,)`，读数单位N，**附着link局部坐标**：
 
-\[
+$$
  F_L=R_{WL}^{T}\sum_c s_c F^{internal}_c,
  \quad s_c=-1\ (link=A),\quad +1\ (link=B).
-\]
+$$
 
 源码先按A/B符号求和再逆旋转（另一非zerocopy分支逐接触做同等变换），再对每轴执行 `clip(F,−max_force,+max_force)` 和 `abs(F)<min_force → 0`。不是力的模长限额，不返回torque，也没有应用pos_offset生成六轴wrench。多个力可能相消；休眠接触可保留上次awake的支撑力。积分后的姿态用于旋转旧子步接触力，这种采样差异需与E3一起阅读。[聚合与换系][force-raw]、[后处理][force-post]。
 
@@ -176,10 +176,10 @@ RaycastContext实际遍历 **rigid_solver和kinematic_solver**：rigid默认建c
 
 `gs.sensors.JointTorque(entity_idx=robot.idx,dofs_idx_local=(...))` 返回所选DOF的输出端广义effort，revolute是N·m、prismatic是N。它调用 `RigidSolver.get_dofs_actuator_force`：
 
-\[
+$$
  \tau_{out}=qf_{applied}-I_{armature}\,qacc_{constraint}
              +qf_{frictionloss}+qf_{passive}.
-\]
+$$
 
 qf_applied是保存的实际驱动力；frictionloss由对应约束行映射，passive包括耗散项，约束解加速度把负载间接带入。它不直接返回电机命令、关节所有净力或单一contact wrench，不能对比PD限额就直接下“受力超限”结论。[sensor调用][joint-sensor]、[getter字段与公式][actuator-force]。外部耦合对所有effort项的完整等价性不由这个刚体公式保证。
 
@@ -187,10 +187,10 @@ qf_applied是保存的实际驱动力；frictionloss由对应约束行映射，p
 
 `gs.sensors.IMU` 的NamedTuple字段是 `lin_acc, ang_vel, mag`，每项 `(*batch,3)`。在固定实现中
 
-\[
+$$
  a_S=R_{WS}^T\big(a_L+\alpha\times r+\omega\times(\omega\times r)-g\big),
  \quad\omega_S=R_{WS}^T\omega_W.
-\]
+$$
 
 a单位m/s²，omega为rad/s；r是link→sensor偏移在世界系表达。静止正放加速度计会读到抵消重力的proper acceleration，而不是零。之后还会应用cross-axis矩阵与各通道误差。mag只是把配置的世界磁场向量旋转到sensor系；代码不做单位换算，`magnetic_field`及noise/bias必须使用一致的自定磁场单位，默认 `(0,0,0.5)` 不能直接标成地磁标定的Tesla值。[IMU kernel][imu-kernel]、[返回与变换][imu-impl]。
 
@@ -212,10 +212,10 @@ a单位m/s²，omega为rad/s；r是link→sensor偏移在世界系表达。静�
 
 对最大probe深度 `δ>0`，指数 `p=normal_exponent>=1`、link系表面法向n，源码先计算 `s=δ^p`，再用对方减sensor的相对速度 `v_rel`、法向分量 `v_n=v_rel·n`、切向 `v_t=v_rel−v_n n`：
 
-\[
+$$
  F=k_n s n+c_n s v_n n-c_s v_t,
  \qquad T=r_{probe}\times F-c_t(\omega_{rel}\cdot n)n.
-\]
+$$
 
 这不是E3约束求解器的摩擦锥法；没有在此按 `μ F_n` 钳制切向力，也不将F施回动力学。若要公式输出N，则 `k_n` 单位N/m^p、`c_n` 为N·s/m^(p+1)、`c_s` 为N·s/m，`c_t` 为N·m·s（弧度无量纲）；改变p必须重新理解参数，不能沿用线性弹簧的N/m标签。没有接触候选时输出零；法向由SDF梯度或三角面决定，mesh预处理影响结果。[实际kernel][taxel-force]。
 
