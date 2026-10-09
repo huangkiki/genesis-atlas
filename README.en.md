@@ -14,6 +14,8 @@ The [E3 contact, solvers and force-observation lesson](docs/contact-solvers-forc
 
 The [E4 sensors, rendering and visualization lesson](docs/sensors-rendering.md) separates visual cameras, lazy RGB camera sensors, ray/depth queries, contact/joint effort, IMU and tactile models. It covers frames, units, shapes, sampling/cache timing, segmentation-ID decoding, GUI/headless and renderer/differentiation limits. The [acceptance record](docs/e4-acceptance.md) lists pinned implementation gaps and the unexecuted native API example.
 
+The [E5 batching, learning interfaces and data lesson](docs/batch-learning-data.md) explains batch isolation, reset clocks, CPU/GPU tensor ownership, the actual Go2 task contract, termination versus truncation, domain randomization, recorders, checkpoints and playback. It distinguishes Genesis task code from the unpinned external RL trainer and documents profiling and sim-to-real limits. The [acceptance record](docs/e5-acceptance.md) covers pinned-source and syntax checks; no native execution, training or benchmark was performed.
+
 The full course is in development. This phase prioritizes understanding engine subsystems. Minimal snippets support explanation and are explicitly marked when unexecuted. No new simulation campaigns, benchmarks, training or scoring are included; later experimental material will reuse [DexLab](https://github.com/huangkiki/Dexlab) with its original version and workload boundaries.
 
 [Pinned upstream source](https://github.com/Genesis-Embodied-AI/genesis-world/tree/216a708e06124595521a9d36a51fae5393fd4ff8) · [Attribution](THIRD_PARTY.md)

@@ -12,7 +12,7 @@
 
 `Scene.build(n_envs=0)` 表示非批量用法；正数引入批量维度。写状态、读状态和控制时都要核对 shape，不要把 `n_envs=1` 自动当成没有 batch 维度。`env_spacing` 服务于场景显示排列，不应擅自加到环境内部的物理坐标。
 
-多个环境应有明确的状态、reset 索引和控制输入归属。批量机制、张量设备及 CPU/GPU 拷贝属于性能专题；当前不做吞吐基准或训练。
+多个环境应有明确的状态、reset 索引和控制输入归属。批量机制、张量设备及 CPU/GPU 拷贝已在 [E5](batch-learning-data.md) 展开；当前不做吞吐基准或训练。
 
 ## 3. 设置状态与控制实体
 
@@ -38,6 +38,6 @@ CG 与 Newton 的分支、[noslip](https://github.com/Genesis-Embodied-AI/genesi
 
 这些观测接口已在 [E4 传感器与渲染专题](sensors-rendering.md) 展开，包含分割ID、轴深度/range和缓存时序的固定版本差异。
 
-多物理求解器、耦合器、可微路径与 rigid solver 的支持集合应分别列出。学习接口要说明 reset/step、终止/截断、随机种子与观测拼接，但本阶段不启动策略训练。自查：能否解释 build 前后允许的操作、batch 维度、状态设置与控制的差别、默认值的解析路径？专题展开见[完整路线](curriculum.md)。
+多物理求解器、耦合器、可微路径与 rigid solver 的支持集合应分别列出。[E5 批量、学习与数据](batch-learning-data.md)已展开 reset/step、终止/截断、随机种子、观测拼接、日志与回放；明确官方任务示例与外部训练器的边界，本阶段不启动策略训练。自查：能否解释 build 前后允许的操作、batch 维度、状态设置与控制的差别、默认值的解析路径？专题展开见[完整路线](curriculum.md)。
 
 实验最终复用 [DexLab](https://github.com/huangkiki/Dexlab) 并保留原版本、配置和工况；当前不另建实验批次或评分器。

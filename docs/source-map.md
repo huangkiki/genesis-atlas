@@ -115,3 +115,25 @@
 | [genesis/vis/raytracer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/raytracer.py) | Luisa接口与RGB字节读回，非运行验收 |
 | [genesis/vis/visualizer.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/vis/visualizer.py) | viewer与camera renderer分离、segmentation字典、可视状态更新 |
 | [tests/sensors/test_api.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/tests/sensors/test_api.py) | 上游history绕过delay与jitter预期；只阅读未执行 |
+
+## E5 新增阅读入口
+
+[批量、学习接口与数据](batch-learning-data.md)沿用已冻结 Scene/Simulator、刚体 getter/setter、初始化、misc 与 DataKind；新增下列实际引用文件。仅分析 Genesis 侧学习调用，外部 RSL-RL/TensorDict 的精确实现未固定、未安装或执行，不据此声称训练器内部已验收。所有文件均核对固定 tree/blob。
+
+| 源码文件 | 阅读目的 |
+|---|---|
+| [examples/drone/hover_env.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/drone/hover_env.py) | 对照另一官方任务的 reset/reward 与 latency 使用，非统一 Env 契约 |
+| [examples/locomotion/go2_env.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/locomotion/go2_env.py) | batch buffer、四返回、自动 reset、终止观测缺失、动作延迟/索引/配置所有权 |
+| [examples/locomotion/go2_eval.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/locomotion/go2_eval.py) | 外部 checkpoint 加载和推理调用；不审计外部算法内部 |
+| [examples/locomotion/go2_train.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/locomotion/go2_train.py) | 外部训练器身份与下界版本、任务配置、初始化与调用边界 |
+| [examples/rigid/domain_randomization.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/examples/rigid/domain_randomization.py) | 质量/惯量/COM/摩擦的原生随机化入口，仅阅读 |
+| [genesis/engine/entities/rigid_entity/description.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/engine/entities/rigid_entity/description.py) | 异构形态类型、单根及 joint/link/DOF 检查，与 Scene 过时注释区分 |
+| [genesis/options/profiling.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/profiling.py) | 阶段窗口/FPS选项 |
+| [genesis/options/recorders.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/options/recorders.py) | 采样、队列、CSV/NPZ/轨迹选项与默认值 |
+| [genesis/recorders/__init__.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/__init__.py) | options重导出和记录器注册入口 |
+| [genesis/recorders/base_recorder.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/base_recorder.py) | 采样量化、CPU数据所有权、队列丢旧、错误和flush生命周期 |
+| [genesis/recorders/file_writers.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/file_writers.py) | CSV展开、NPZ全量内存缓冲与cleanup |
+| [genesis/recorders/recorder_manager.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/recorder_manager.py) | 注册/build/reset/stop和自定义recording分派 |
+| [genesis/recorders/trajectory.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/recorders/trajectory.py) | 数据类别、exact/compressed、分块、末帧、seek/play和头部身份 |
+| [genesis/utils/serialization.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/serialization.py) | source_digest范围、场景包load与来源差异警告 |
+| [genesis/utils/tools.py](https://github.com/Genesis-Embodied-AI/genesis-world/blob/216a708e06124595521a9d36a51fae5393fd4ff8/genesis/utils/tools.py) | FPSTracker主机计时、窗口平均与并行吞吐口径 |
