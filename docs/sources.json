@@ -1,0 +1,51 @@
+{
+  "upstream": "Genesis-Embodied-AI/genesis-world",
+  "commit": "216a708e06124595521a9d36a51fae5393fd4ff8",
+  "scope": "source study; no simulation experiments or performance claims",
+  "files": [
+    {
+      "path": "genesis/__init__.py",
+      "git_blob": "e45a129fd5108428027d500e88004ec9250b8c90"
+    },
+    {
+      "path": "genesis/engine/scene.py",
+      "git_blob": "36d5acc6a12220429bf95802ebd3119b5b9061f3"
+    },
+    {
+      "path": "genesis/engine/simulator.py",
+      "git_blob": "e7f6dc3cfbbb565b75d23462ad86520d7e7556be"
+    },
+    {
+      "path": "genesis/options/solvers.py",
+      "git_blob": "5d7d39ebca356cd57358dde48baea4586707438c"
+    },
+    {
+      "path": "genesis/engine/entities/rigid_entity/rigid_entity.py",
+      "git_blob": "d1ca586cde76d99d84c79a59bf729d36e7ad16d7"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/constraint/solver.py",
+      "git_blob": "4cf5c2a43ff737dc1bf2d99c3878ea321947e9f0"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/constraint/noslip.py",
+      "git_blob": "6f5a8686e0d31c60e4f687358b3951edac7e2415"
+    },
+    {
+      "path": "genesis/engine/solvers/rigid/rigid_solver.py",
+      "git_blob": "a1db0f782aeb9eaf013da7f7da88e400d092d652"
+    },
+    {
+      "path": "genesis/vis/camera.py",
+      "git_blob": "11adf895335c77188f36b9ff1d905abd00aff61b"
+    },
+    {
+      "path": "genesis/options/sensors/tactile.py",
+      "git_blob": "b2868c4c4348c51a3094642a7cda62707f38cc42"
+    },
+    {
+      "path": "examples/tutorials/hello_genesis.py",
+      "git_blob": "0596dccbd34bf12c22aa13ff9d5a5293fd466e0d"
+    }
+  ]
+}
